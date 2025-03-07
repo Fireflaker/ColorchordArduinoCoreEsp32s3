@@ -44,8 +44,8 @@ void PushSample32(int16_t dat);
 #endif
 
 //Don't configure this.
-#define FIXBINS  (FIXBPERO*OCTAVES)
-#define BINCYCLE (1<<OCTAVES)
+//#define FIXBINS  (FIXBPERO*OCTAVES)
+//#define BINCYCLE (1<<OCTAVES)
 
 //You may increase this past 5 but if you do, the amplitude of your incoming
 //signal must decrease.  Increasing this value makes responses slower.  Lower

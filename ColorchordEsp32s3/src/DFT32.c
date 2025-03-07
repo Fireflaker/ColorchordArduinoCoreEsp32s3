@@ -89,7 +89,8 @@ int main()
 
 
 
-uint16_t Sdatspace32A[FIXBINS*2];  //(advances,places) full revolution is 256. 8bits integer part 8bit fractional
+//uint16_t Sdatspace32A[FIXBINS*2];  //(advances,places) full revolution is 256. 8bits integer part 8bit fractional
+int32_t Sdatspace32A[FIXBINS*2];  //(advances,places) full revolution is 256. 8bits integer part 8bit fractional
 int32_t Sdatspace32B[FIXBINS*2];  //(isses,icses)
 
 //This is updated every time the DFT hits the octavecount, or 1 out of (1<<OCTAVES) times which is (1<<(OCTAVES-1)) samples
@@ -209,14 +210,23 @@ void UpdateOutputBins32()
 
 static void HandleInt( int16_t sample )
 {
+	uint8_t oct = Sdo_this_octave[Swhichoctaveplace];
+	// Should immediately validate oct here!
+	if (oct >= OCTAVES) return; // ← MUST BE RIGHT AFTER oct DECLARATION
+	//AI says this is bad, replace with:
+	//Swhichoctaveplace ++;
+	//Swhichoctaveplace &= BINCYCLE-1;
+	Swhichoctaveplace = (Swhichoctaveplace + 1) % BINCYCLE;
+	//This ensures Swhichoctaveplace always stays within bounds, even if BINCYCLE is not a power of 2.
+
 	int i;
+	if(i >= FIXBPERO) return;   // Add index boundary check
 	uint16_t adv;
 	uint8_t localipl;
-	int16_t filteredsample;
-
-	uint8_t oct = Sdo_this_octave[Swhichoctaveplace];
-	Swhichoctaveplace ++;
-	Swhichoctaveplace &= BINCYCLE-1;
+	// Replace the filtered sample line in HandleInt():
+	int16_t filteredsample = (int16_t)( (Saccum_octavebins[oct] >> (OCTAVES - oct)) - 2048 ); // Center 12-bit ADC (0-4095) → (-2048 to +2047)
+	// Add saturation guard
+	filteredsample = CLAMP(filteredsample, -2048, 2047);
 
 	for( i = 0; i < OCTAVES;i++ )
 	{
@@ -247,8 +257,12 @@ static void HandleInt( int16_t sample )
 		return;
 	}
 
+	// These lines risk array overflows: Verify: Check FIXBPERO and OCTAVES match header definitions
+	_Static_assert(FIXBPERO * OCTAVES * 2 <= sizeof(Sdatspace32A)/sizeof(Sdatspace32A[0]),"Array size mismatch");
+	if (oct * FIXBPERO * 2 >= sizeof(Sdatspace32A) / sizeof(Sdatspace32A[0])) return;//limit Bounds
+
 	// process a filtered sample for one of the octaves
-	uint16_t * dsA = &Sdatspace32A[oct*FIXBPERO*2];
+	int32_t * dsA = &Sdatspace32A[oct*FIXBPERO*2];
 	int32_t * dsB = &Sdatspace32B[oct*FIXBPERO*2];
 
 	filteredsample = Saccum_octavebins[oct]>>(OCTAVES-oct);
@@ -260,10 +274,17 @@ static void HandleInt( int16_t sample )
 		localipl = *(dsA) >> 8;
 		*(dsA++) += adv;
 
-		*(dsB++) += (Ssinonlytable[localipl] * filteredsample);
+		//AI says this is bad, replace with:
+		//*(dsB++) += (Ssinonlytable[localipl] * filteredsample);
 		//Get the cosine (1/4 wavelength out-of-phase with sin)
-		localipl += 64;
-		*(dsB++) += (Ssinonlytable[localipl] * filteredsample);
+		//localipl += 64;
+		//*(dsB++) += (Ssinonlytable[localipl] * filteredsample);
+		//above is original code
+		//AI begin
+		// Fixed version:
+		localipl = (localipl + 64) % 256;
+		int32_t result = (int32_t)Ssinonlytable[localipl] * filteredsample;
+		result = CLAMP(result, INT32_MIN, INT32_MAX);  // Requires CLAMP macro
 	}
 }
 

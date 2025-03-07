@@ -16,9 +16,10 @@ struct CCSettings CCS = {
     .gMINIMUM_AMP_FOR_NOTE_TO_DISAPPEAR = 64, // Note disappearance
     .gNOTE_FINAL_AMP = 12,           // LED brightness scaling
     .gNERF_NOTE_PORP = 15,           // Size normalization
-    .gUSE_NUM_LIN_LEDS = NUM_LIN_LEDS,// Use configured LED count
+    .gUSE_NUM_LIN_LEDS = 16,// Use configured LED count
     .gCOLORCHORD_ACTIVE = 1,         // Enable by default
     .gCOLORCHORD_OUTPUT_DRIVER = 0,  // Default output mode
     .gLED_DRIVER_MODE = 0,           // Default LED mode
     .gINITIAL_AMP = 500              // Initial amplitude baseline
 };
+

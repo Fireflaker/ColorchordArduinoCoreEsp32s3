@@ -32,7 +32,7 @@ void HandleFrameInfo(void);
 //You may make this a float. If PRECOMPUTE_FREQUENCY_TABLE is defined, then
 //it will create the table at compile time, and the float will never be used
 //runtime.
-#define BASE_FREQ 55.0
+#define BASE_FREQ 55.0f // Match float type
 
 //The higher the number the slackier your FFT will be come.
 #ifndef FUZZ_IIR_BITS
@@ -58,7 +58,7 @@ void HandleFrameInfo(void);
 #define SEMIBITSPERBIN 3 
 #endif
 
-#define NOTERANGE ((1<<SEMIBITSPERBIN)*FIXBPERO)
+//#define NOTERANGE ((1<<SEMIBITSPERBIN)*FIXBPERO)
 
 
 //If there is detected note this far away from an established note, we will

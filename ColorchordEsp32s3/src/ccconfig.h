@@ -1,9 +1,24 @@
 #ifndef _CCCONFIG_H
 #define _CCCONFIG_H
+// Prevent multiple inclusions
+#pragma once
+
 
 #include <stdint.h>       // For standard integer types
 #include <Arduino.h>      // ESP32 core headers
 #include <string.h>       // For memory functions
+
+// Ensure ADC parameters match ESP32-S3
+#define SOC_DAC_SUPPORTED 1  // Enable ESP32-S3-specific DAC features
+#define DFREQ 8000.0       // Sample rate
+#define BASE_FREQ 55.0f    // A1 note
+#define ADC_ATTENUATION ADC_ATTEN_DB_12 //11 does not exsist
+
+// Add ESP32-S3 specific calibration
+#define ADC_CALIBRATION_VREF  1100  // 1.1V reference (ESP32-S3 specific)
+#define ADC_OVERSAMPLE_SHIFT  2     // 4x oversampling (match ESP-IDF ADC DIGI)
+
+#define CLAMP(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
 
 // Configuration Structure
 struct CCSettings
@@ -48,7 +63,10 @@ extern struct CCSettings CCS;
 #define FIXBPERO 24  ///< Bins per octave in frequency analysis
 #endif
 
-#define NOTERANGE ((1 << CCS.gSEMIBITSPERBIN) * FIXBPERO) ///< Total note range
+//< Total note range
+#ifndef NOTERANGE
+#define NOTERANGE ((1 << CCS.gSEMIBITSPERBIN) * FIXBPERO)
+#endif
 
 // Configuration Macros -------------------------------------------------------
 #define ROOT_NOTE_OFFSET    CCS.gROOT_NOTE_OFFSET
