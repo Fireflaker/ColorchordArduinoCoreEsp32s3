@@ -4,6 +4,8 @@ Demacritize. Thank you to https://github.com/cnlohr/colorchord. It's pretty
 
 first build pass Mar 6 2025 4pm
 
+go follow https://github.com/Charlatt :)
+
 
 same license copied from charles' repo
 Copyright (c) 2012-2022, Charles Lohr (CNLohr), et. al.
