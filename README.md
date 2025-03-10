@@ -1,12 +1,21 @@
 # ColorchordArduinoCoreEsp32s3
 Demacritize. Thank you to https://github.com/cnlohr/colorchord. It's pretty
 
-
 first build pass Mar 6 2025 4pm
 
 go follow https://github.com/Charlatt :)
 
+##Current state
+it is currently built for esp32s3 but passes compile for esp32 and probably a lot of other boards.
+there is a version for i2s pdm microphone and one for adc input on pin 1. interrupt safe.
+please contribute because it is very much a work in progress
 
+##Install
+get vs code and install platform io, open folder of choice, click the -> arrow.
+tinker and post your improvements here
+ask chat for config help
+
+##license
 same license copied from charles' repo
 Copyright (c) 2012-2022, Charles Lohr (CNLohr), et. al.
 
