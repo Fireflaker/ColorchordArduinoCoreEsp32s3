@@ -10,6 +10,8 @@ it is currently built for esp32s3 but passes compile for esp32 and probably a lo
 there is a version for i2s pdm microphone and one for adc input on pin 1. interrupt safe.
 please contribute because it is very much a work in progress
 
+Demo: https://youtu.be/9l3OOd5NJVg
+
 Major improvement over esp8266 embedded is 1. 240mhz dual core vs 80mhz single core. 2. support more than 255 leds. 3. compatable with arduino libraries and use fastled for ws2812 - so it is easy to support other addressable leds like rgb-yellow 4 color hue wheel
 
 ## Install
