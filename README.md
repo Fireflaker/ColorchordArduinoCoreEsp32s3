@@ -15,7 +15,7 @@ Demo: https://youtu.be/9l3OOd5NJVg
 Major improvement over esp8266 embedded is 1. 240mhz dual core vs 80mhz single core. 2. support more than 255 leds. 3. compatable with arduino libraries and use fastled for ws2812 - so it is easy to support other addressable leds like rgb-yellow 4 color hue wheel
 
 ## Get started
-get vs code and install platform io, open folder of choice(downloaded from this repo above), click the -> arrow.
+get vs code and install platform io, open folder of choice(downloaded from this repo above), it should auto-include all libraries so all you need is just click the -> arrow.
 tinker and post your improvements here
 ask chat for help
 
