@@ -14,10 +14,15 @@ Demo: https://youtu.be/9l3OOd5NJVg
 
 Major improvement over esp8266 embedded is 1. 240mhz dual core vs 80mhz single core. 2. support more than 255 leds. 3. compatable with arduino libraries and use fastled for ws2812 - so it is easy to support other addressable leds like rgb-yellow 4 color hue wheel
 
-## Install
+## Get started
 get vs code and install platform io, open folder of choice, click the -> arrow.
 tinker and post your improvements here
 ask chat for config help
+
+### If you want multiple simultaneous audio outputs on windows computer with better control
+Download voicemeter banana or similar audio routing tool
+Set up A1 as your speaker, A2 as colorchord, and more as needed
+Go to MENU -> System settings -> delay - and type in approperate audioStreamDelay in ms.
 
 ## license
 same license copied from charles' repo
