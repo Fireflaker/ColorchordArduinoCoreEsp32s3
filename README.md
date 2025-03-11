@@ -24,6 +24,23 @@ Download voicemeter banana or similar audio routing tool
 Set up A1 as your speaker, A2 as colorchord, and more as needed
 Go to MENU -> System settings -> delay - and type in approperate audioStreamDelay in ms.
 
+## Note to self
+### Don't cook your microcontroller
+<code style="color : Orangered">0. Add a few strong blue or green led between ADC pin 1 and GND as overvoltage protection. If not - you *will* fry your micro.
+</code>
+0.5. Do not attempt to parallel off signal from your exsisting audio setup such as a speaker. If not - you *will* fry your micro. Always use mic or VoiceMeter windows app for audio stream dulication. If you're set to use exsisting audio, the input signal must be either a differencial amplifier or galvanicly isolated with a transformer. LED Vcc should be on a different power supply. Idealy your micro is powered by a seperate usb power adapter.
+### Should Read
+1. it is very easy to crash due to race condition by refreshing LEDs faster than the transmission time of ws2812b led protocal - 300 leds is alreay maxed *below* 120fps(which is 16khz sampling, 1024 sample, 400Khz div clock the way it is rn). Loop and interrupts can - and must - run well above 300 fps. For that to work, we shall run wires to the middle of the led strip and drive the whole strip as 3 seperate strips of 100 leds, for example. Faliure looks like crazy jumping led color looping output or looping for a few seconds and get stuck and crash - even when input is constent zero. This is however easy to implement since we are already on FastLED library.
+   Note this has nothing to do with CPU time. The leds bits are managed asyncronously. ESP32S3 has 8 dedicated RMTs supporting 8 strips in hardware - FASTled Library seems to have managed to make that number 16.
+   Realistic max pixels supported to run 120fps is around 1000 for 8 strips or 2000 for 16 strips - if no overclock. It might have just been me but overclocking LEDs seems to kill ws2812b as well as ws2811 chips.
+2. When prototyping, constently check output with pure frequencies: https://www.szynalski.com/tone-generator/
+3. Timing for adc interrupt needs to be validated. I will setup a oscilioscope test for real world timings.
+4. Right now the i2s mic version seems to have bad artifacts for unknown reasons - i.e. jumpy colors when input pure tones. Still need investigation.
+5. Right now the ADC mic version seems to do best with 15-900Hz range - not right. Possible reason is any faster settings with sampling cause 300LEDs to race - solution is split strip add injection data wires.
+6. Download a spectrometer and observe useful data range in the music you listen to: 100Hz to 4000Hz. Wider may actully make it worse.
+7. Make it run RGB-Yellow asap.
+8. 
+
 ## license
 same license copied from charles' repo
 Copyright (c) 2012-2022, Charles Lohr (CNLohr), et. al.
