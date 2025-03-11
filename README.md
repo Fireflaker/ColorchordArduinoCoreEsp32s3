@@ -1,5 +1,5 @@
 # ColorchordArduinoCoreEsp32s3
-Demacritize. Thank you to https://github.com/cnlohr/colorchord. It's pretty
+Demacritize. Thank you to https://github.com/cnlohr/colorchord. It's pretty. Go star his repo and check out his youtube channel.
 
 first build pass Mar 6 2025 4pm
 
