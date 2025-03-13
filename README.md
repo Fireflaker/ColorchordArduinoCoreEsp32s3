@@ -7,6 +7,7 @@ first build pass Mar 6 2025 4pm
 Go follow https://github.com/Charlatt :)
 
 ## Current state
+*Bug* CPU too fast - race condition for 300 ws2812 LED transmission
 
 Currently built for esp32s3 but passes compile for esp32 and probably a lot of other boards.
 
