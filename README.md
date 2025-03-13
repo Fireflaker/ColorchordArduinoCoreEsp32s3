@@ -7,7 +7,6 @@ first build pass Mar 6 2025 4pm
 Go follow https://github.com/Charlatt :)
 
 ## Current state
-*Bug* CPU too fast - race condition for 300 ws2812 LED transmission
 
 Currently built for esp32s3 but passes compile for esp32 and probably a lot of other boards.
 
@@ -18,6 +17,12 @@ please contribute because it is very much a work in progress
 Demo: https://youtu.be/9l3OOd5NJVg
 
 Major improvement over esp8266 embedded is 1. 240mhz dual core vs 80mhz single core. 2. support more than 255 leds. 3. compatible with Arduino libraries and use fastled for ws2812 - so it is easy to support other addressable leds like rgb-yellow 4 color hue wheel
+
+### To do
+*Bug:* CPU too fast - race condition for 300 ws2812 LED transmission if processing any faster than current versions
+1. Overclock ws2812b led
+2. Brightness equalization: at max brightness, changing color should not be schizophrenic. 
+3. Add real time pattern recognition and beat detection: dynamicly change how easy it is to update colors - to create a smooth wave feeling
 
 ## Get started
 
