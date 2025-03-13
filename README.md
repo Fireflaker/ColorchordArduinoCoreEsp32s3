@@ -23,6 +23,8 @@ Major improvement over esp8266 embedded is 1. 240mhz dual core vs 80mhz single c
 1. Overclock ws2812b led
 2. Brightness equalization: at max brightness, changing color should not be schizophrenic. 
 3. Add real time pattern recognition and beat detection: dynamicly change how easy it is to update colors - to create a smooth wave feeling
+4. Rewrite into full hue wheel form for color information. When combined with brightness equalization, we would have made the RGB-yellow/amber/warm white 4 color SK6812 version.
+5. Split into 2x12 bins; do 2x audio processing; map warm colors(red yellow green) for chords <220Hz; cool colors(cyan blue purple) for chords >=220Hz.
 
 ## Get started
 
